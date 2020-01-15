@@ -51,7 +51,7 @@ stages:
       displayName: dotnet test
       inputs:
         command: test
-        arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+        arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true "/p:CoverletOutputFormat=\"opencover,Cobertura\""'
         projects: 'test/**/*Tests.csproj'
         nobuild: true
 
