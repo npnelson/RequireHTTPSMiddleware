@@ -18,6 +18,23 @@ stages:
         version: 3.1.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
 
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk 2.1'
+      inputs:
+        packageType: sdk
+        version: 2.1.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'npnelson'
+        scannerMode: 'MSBuild'
+        projectKey: 'RequireHTTPSMiddleware'
+        projectName: 'RequireHTTPSMiddleware'
+        extraProperties: |
+          sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/test/NETToolBox.RequireHTTPS.Tests/coverage.opencover.xml  
+
     - script: 'dotnet tool restore'
       displayName: dotnet tool restore
 
@@ -37,6 +54,12 @@ stages:
         arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
         projects: 'test/**/*Tests.csproj'
         nobuild: true
+
+    - task: SonarCloudAnalyze@1
+
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300' 
 
     - script: 'dotnet reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:Cobertura'
       displayName: GenerateReport
