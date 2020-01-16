@@ -81,12 +81,12 @@ stages:
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'GitVersion.NugetVersion'
 
-    - task: DotNetCoreCLI@2
+    - task: NuGetCommand@2
       displayName: "Push packages to NuGet"
       condition: and(succeeded(),eq(variables['Build.SourceBranch'],'refs/heads/master'))
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
         nuGetFeedType: 'external'
         publishFeedCredentials: 'Nuget'
     
