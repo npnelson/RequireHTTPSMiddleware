@@ -86,7 +86,7 @@ stages:
       condition: and(succeeded(),eq(variables['Build.SourceBranch'],'refs/heads/master'))
       inputs:
         command: 'push'
-        packagesToPush: '$(Build.SourcesDirectory)/*.nupkg'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
         nuGetFeedType: 'external'
         publishFeedCredentials: 'Nuget'
     
