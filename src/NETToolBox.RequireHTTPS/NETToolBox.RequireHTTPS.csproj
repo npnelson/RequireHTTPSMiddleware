@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <ProjectGuid>6f084457-253b-4609-b6f1-af9320b208bd</ProjectGuid>
+    <RepositoryUrl>https://github.com/npnelson/RequireHTTPSMiddleware</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App"/>
